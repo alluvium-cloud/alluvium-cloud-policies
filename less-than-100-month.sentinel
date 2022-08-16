@@ -1,8 +1,10 @@
 import "tfrun"
 import "decimal"
 
+param cost_delta_maximum
+
 delta_monthly_cost = decimal.new(tfrun.cost_estimate.delta_monthly_cost)
 
 main = rule {
-    delta_monthly_cost.less_than(30)
+    delta_monthly_cost.less_than(cost_delta_maximum)
 }
