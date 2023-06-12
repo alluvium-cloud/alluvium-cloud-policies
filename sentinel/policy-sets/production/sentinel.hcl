@@ -18,3 +18,4 @@ policy "enforce-mandatory-tags" {
     "mandatory_tags" = ["Description"]
   }
 }
+
