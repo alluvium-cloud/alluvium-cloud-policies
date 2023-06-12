@@ -30,4 +30,5 @@ jobs:
 
       - name: Sentinel Tests
         run: |
+          find .
           ./sentinel test -verbose ./sentinel/policies/aws/
