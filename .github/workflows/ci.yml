@@ -24,11 +24,10 @@ jobs:
       - name: Setup Sentinel
         run: |
           wget --no-verbose --timestamping -O sentinel.zip https://releases.hashicorp.com/sentinel/${{ matrix.sentinel-version }}/sentinel_${{ matrix.sentinel-version }}_linux_amd64.zip
-          rm -rf ./sentinel || true
-          unzip sentinel.zip
-          chmod +x ./sentinel
+          unzip -j sentinel.zip "sentinel" -d "./sentinel-cli"
+          chmod +x ./sentinel-cli
 
       - name: Sentinel Tests
         run: |
           find .
-          ./sentinel test -verbose ./sentinel/policies/aws/
+          ./sentinel-cli test -verbose ./sentinel/policies/aws/
