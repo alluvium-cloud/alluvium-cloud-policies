@@ -1,7 +1,12 @@
 name: Sentinel Unit Tests
 
-on:
-  pull_request:
+on: 
+  push:
+    # only trigger on branches, not on tags
+    branches: '**'
+
+# on:
+#   pull_request:
 
 permissions: read-all
 
