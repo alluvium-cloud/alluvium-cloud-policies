@@ -24,7 +24,7 @@ jobs:
       - name: Setup Sentinel
         run: |
           wget --no-verbose --timestamping -O sentinel.zip https://releases.hashicorp.com/sentinel/${{ matrix.sentinel-version }}/sentinel_${{ matrix.sentinel-version }}_linux_amd64.zip
-          rm -f ./sentinel
+          rm -rf ./sentinel || true
           unzip sentinel.zip
           chmod +x ./sentinel
 
