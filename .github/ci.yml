@@ -1,0 +1,27 @@
+name: Sentinel Unit Tests
+
+on:
+  pull_request:
+
+permissions: read-all
+
+jobs:
+  test:
+    name: Test Sentinel Policies
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        sentinel-version: [0.22.0]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Sentinel
+        run: |
+          wget -nv -O sentinel.zip https://releases.hashicorp.com/sentinel/${{ matrix.sentinel-version }}/sentinel_${{ matrix.sentinel-version }}_linux_amd64.zip
+          unzip sentinel.zip
+          chmod +x ./sentinel
+
+      - name: Sentinel Tests
+        run: |
+          ./sentinel test -verbose ./sentinel/policies/aws/

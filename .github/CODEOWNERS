@@ -1,0 +1,8 @@
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+# the IAC Leads will be requested for review when someone opens
+# a pull request.
+* @cpchem/iac-leads @cpchem/iac-developers
+
+# If this repository is sensitive, modify this to @cpchem/dt-devops-leads
+.github/* @cpchem/dt-devops

@@ -1,0 +1,51 @@
+# Common functions for use with the Azure provider
+
+##### Imports #####
+import "types"
+import "tfplan/v2" as tfplan
+
+##### Functions #####
+
+### find_resources ###
+find_resources = func() {
+	resources = filter tfplan.resource_changes as address, rc {
+		rc.provider_name matches "(.*)azurerm$" and
+			rc.mode is "managed" and
+			(rc.change.actions contains "create" or rc.change.actions contains "update" or
+				rc.change.actions contains "read" or
+				rc.change.actions contains "no-op")
+	}
+
+	return resources
+}
+
+### find_resources_by_type ###
+find_resources_by_type = func(resource_types) {
+	resources = filter tfplan.resource_changes as address, rc {
+		rc.provider_name matches "(.*)azurerm$" and
+			rc.type in resource_types and
+			rc.mode is "managed" and
+			(rc.change.actions contains "create" or rc.change.actions contains "update" or
+				rc.change.actions contains "read" or
+				rc.change.actions contains "no-op")
+	}
+
+	return resources
+}
+
+### find_resources_with_standard_tags ###
+find_resources_with_standard_tags = func() {
+	resources = filter tfplan.resource_changes as address, rc {
+		# Azure resources only - "provider_name" will end with the provider name
+		rc.provider_name matches "(.*)azurerm$" and
+			# resource is being created, updated, no-op, and ignoring deletes
+			(rc.change.actions contains "create" or rc.change.actions contains "update" or
+				rc.change.actions contains "read" or
+				rc.change.actions contains "no-op") and
+			# resource 'tags' is null and ignoring missing 'tags' argument
+			((rc.change.after.tags is null) else false or
+				# resource 'tags' is of type map
+				types.type_of(rc.change.after.tags) is "map")
+	}
+	return resources
+}

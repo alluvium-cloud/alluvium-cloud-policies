@@ -1,0 +1,22 @@
+# Policy to require that certain tags are present on all Azure resources that support them.
+
+# Import tfplan-functions.sentinel with alias "plan"
+import "tfplan-functions" as plan
+
+# Import azure-functions.sentinel with alias "azure"
+import "azure-functions" as azure
+
+# List of required tags
+param mandatory_tags default [""]
+
+# Get all Azure Resources with standard tags
+all_azure_resources_with_standard_tags = azure.find_resources_with_standard_tags()
+
+# Filter to Azure resources with violations
+# Warnings will be printed for all violations since the last parameter is true
+violating_azure_resources = plan.filter_attribute_not_contains_list(all_azure_resources_with_standard_tags, "tags", mandatory_tags, true)
+
+# Main rule
+main = rule {
+	length(violating_azure_resources["messages"]) is 0
+}
