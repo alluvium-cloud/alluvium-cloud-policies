@@ -5,7 +5,7 @@ package terraform.policies.required_tags
 import input.tfplan as tfplan
 
 
-required_tags = ["Department"]
+required_tags = ["Department", "Hooha"]
 
 
 array_contains(arr, elem) {
