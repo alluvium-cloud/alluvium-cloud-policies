@@ -13,8 +13,9 @@ policy "no-hazardous-asteroids-today" {
   source            = "../../policies/global/no-hazardous-asteroids-today.sentinel"
   enforcement_level = "advisory"
 
+  param nasa_api_token
+
   params = {
     "danger_distance" = 100
-    "nasa_api_token" = X
   }
 }
