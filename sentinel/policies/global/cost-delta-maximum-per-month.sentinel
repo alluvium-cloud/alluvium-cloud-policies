@@ -5,6 +5,13 @@ param cost_delta_maximum
 
 delta_monthly_cost = decimal.new(tfrun.cost_estimate.delta_monthly_cost)
 
+// --------------------------------------------------------
+// Name:        cost-delta-maximum.sentinel
+// Category:    Terraform - All Clouds
+// --------------------------------------------------------
+// Ensure this change does not increase monthly cost by 
+// more than $cost_delta_maximum
+// --------------------------------------------------------
 main = rule {
     delta_monthly_cost.less_than(cost_delta_maximum)
 }

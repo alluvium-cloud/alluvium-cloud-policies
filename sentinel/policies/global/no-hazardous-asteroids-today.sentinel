@@ -62,6 +62,13 @@ near_earth_objects = json.unmarshal(resp.body)["near_earth_objects"][today]
 #print("near earth objects:", json.unmarshal(resp.body))
 
 no_close_asteroids = no_close_hazardous_asteroids(near_earth_objects, danger_distance)
+// --------------------------------------------------------
+// Name:        no-hazardous-asteroids-today.sentinel
+// Category:    Earth
+// Resource:    api.nasa.gov
+// --------------------------------------------------------
+// Ensure no hazardous asteroids are approaching.
+// --------------------------------------------------------
 main = rule {
   no_close_asteroids 
 }
