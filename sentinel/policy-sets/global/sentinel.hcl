@@ -1,7 +1,7 @@
 # Sentinel Policies
 
 policy "cost-delta-maximum-per-month" {
-  source            = "../../policies/shared/cost-delta-maximum-per-month.sentinel"
+  source            = "../../policies/global/cost-delta-maximum-per-month.sentinel"
   enforcement_level = "advisory"
 
   params = {
@@ -10,7 +10,7 @@ policy "cost-delta-maximum-per-month" {
 }
 
 policy "no-hazardous-asteroids-today" {
-  source            = "../../policies/shared/no-hazardous-asteroids-today.sentinel"
+  source            = "../../policies/global/no-hazardous-asteroids-today.sentinel"
   enforcement_level = "advisory"
 
   params = {
