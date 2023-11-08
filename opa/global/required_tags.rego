@@ -1,6 +1,6 @@
 # Enforces a set of required tag keys. Values are bot checked
 
-package terraform
+package terraform.policies.required_tags
 
 import input.tfplan as tfplan
 
