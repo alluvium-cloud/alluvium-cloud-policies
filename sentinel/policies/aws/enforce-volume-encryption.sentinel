@@ -1,0 +1,25 @@
+# Enforcing instance root volume encryption for
+# aws ec2 instances
+
+# This Policy uses tfplan/v2 as the data source
+import "tfplan/v2" as tfplan
+
+# Filtering all of 'aws_instance' resources from the plan file
+ec2_instances = filter tfplan.resource_changes as _, resource {
+	resource.mode == "managed" and
+		resource.type == "aws_instance" and
+		(resource.change.actions contains "create" or resource.change.actions == ["update"])
+}
+
+# Enforcing root device encryption
+deny_non_encrypted_root_block_device = rule {
+	all ec2_instances as _, instances {
+		all instances.change.after.root_block_device as rbd {
+			rbd.encrypted is true
+		}
+	}
+}
+
+main = rule {
+	deny_non_encrypted_root_block_device
+}
